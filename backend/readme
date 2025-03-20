@@ -1,3 +1,5 @@
 this is the uber app where we are starting with the backend 
 installed the express
 installed the dotenv and cors
+installed mongoose for the db connection in the code 
+made the usermodel
