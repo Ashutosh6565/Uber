@@ -1,6 +1,6 @@
 # User Registration API Documentation
 
-## Register User
+## 1. Register User
 Endpoint for registering a new user in the system.
 
 ### Endpoint
@@ -111,3 +111,88 @@ POST /users/register
 - The returned JWT token should be included in subsequent requests in the Authorization header
 - Password requirements: minimum 6 characters
 - Email must be unique in the database
+
+## 2. Login User
+Endpoint for authenticating existing users.
+
+### Endpoint
+```
+POST /users/login
+```
+
+### Request Body
+```json
+{
+  "email": "string",    // valid email format
+  "password": "string"  // minimum 6 characters
+}
+```
+
+### Validation Rules
+- `email`: Required, must be a valid email format
+- `password`: Required, minimum 6 characters
+
+### Example Request
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+### Success Response
+**Code**: 200 OK
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "user": {
+    "_id": "65f19d5a9f3f9c8c9a8b4567",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "socketID": null,
+    "__v": 0
+  }
+}
+```
+
+### Error Responses
+
+#### Invalid Email
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Invalid Email"
+}
+```
+
+#### Invalid Password
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Invalid Password"
+}
+```
+
+#### Validation Error
+**Code**: 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid Email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### Security Features
+- Passwords are compared using bcrypt
+- JWT token generated has 1 hour expiration
+- Password is never returned in the response
+
+
