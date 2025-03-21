@@ -3,3 +3,6 @@ installed the express
 installed the dotenv and cors
 installed mongoose for the db connection in the code 
 made the usermodel
+now installed the bcrypt and jsonwebtoekn for the basic authentiaction in the code 
+
+installed express-validator for the ,purpose of validation data that is coming for the frontend form the user side 
