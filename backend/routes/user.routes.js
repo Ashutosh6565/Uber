@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {body} = require('express-validator');
 const userController = require('../controllers/user.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
 router.post('/register', [
 
     body('email').isEmail().withMessage('Invalid Email'),
@@ -18,4 +19,8 @@ router.post('/login', [
 userController.userLogin
 );
 
+router.get('/profile', authMiddleware.authUser, userController.userProfile);
+
 module.exports = router;
+//this is the routes then we will use in the controller to get the data from the database and send it to the client.
+//this is the routes then we will use in the controller to get the data from the database and send it to the client.
