@@ -22,5 +22,3 @@ userController.userLogin
 router.get('/profile', authMiddleware.authUser, userController.userProfile);
 
 module.exports = router;
-//this is the routes then we will use in the controller to get the data from the database and send it to the client.
-//this is the routes then we will use in the controller to get the data from the database and send it to the client.
