@@ -195,4 +195,77 @@ POST /users/login
 - JWT token generated has 1 hour expiration
 - Password is never returned in the response
 
+## 3. Get User Profile
+Endpoint for retrieving the profile of the authenticated user.
+
+### Endpoint
+```
+GET /users/profile
+```
+
+### Headers
+- **Authorization**: Bearer `<JWT_TOKEN>` (required)
+
+### Success Response
+**Code**: 200 OK
+```json
+{
+  "_id": "65f19d5a9f3f9c8c9a8b4567",
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "socketID": null,
+  "__v": 0
+}
+```
+
+### Error Responses
+
+#### Unauthorized Access
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+## 4. Logout User
+Endpoint for logging out the authenticated user.
+
+### Endpoint
+```
+GET /users/logout
+```
+
+### Headers
+- **Authorization**: Bearer `<JWT_TOKEN>` (required)
+
+### Success Response
+**Code**: 200 OK
+```json
+{
+  "message": "Logout Success"
+}
+```
+
+### Error Responses
+
+#### Unauthorized Access
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+### Notes
+- The `/users/profile` endpoint requires a valid JWT token in the `Authorization` header.
+- The `/users/logout` endpoint clears the user's session by invalidating the token.
+
 
