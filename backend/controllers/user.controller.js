@@ -3,21 +3,37 @@ const userService = require('../services/user.services');
 const { validationResult } = require('express-validator');
 
 //user register
-module.exports.userRegister = async (req, res,next) => {
-const errors = validationResult(req);
-if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
-}
-console.log(req.body)
-const { fullname, email, password } = req.body;
-const hashedPassword = await userModel.hashPassword(password);
+module.exports.userRegister = async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    
+    try {
+        const { fullname, email, password } = req.body;
+        const hashedPassword = await userModel.hashPassword(password);
 
-const user = await userService.createUser({
-    firstname : fullname.firstname, lastname : fullname.lastname, email, password: hashedPassword    
-});
+        const user = await userService.createUser({
+            firstname: fullname.firstname, 
+            lastname: fullname.lastname, 
+            email, 
+            password: hashedPassword    
+        });
 
-const token = user.generateAuthToken();
-res.status(201).json({token,user});
+        const token = user.generateAuthToken();
+        res.status(201).json({token, user});
+    } catch (error) {
+        if (error.code === 11000) {
+            return res.status(400).json({ 
+                errors: [{
+                    msg: "Email already exists",
+                    param: "email",
+                    location: "body"
+                }]
+            });
+        }
+        next(error);
+    }
 }
 
 //user login
@@ -38,7 +54,7 @@ module.exports.userLogin = async (req, res,next) => {
         return res.status(401).json({ message: 'Invalid Password' });
     }
     const token = user.generateAuthToken();
-
+    res.cookie('token',token);
     res.status(200).json({ token, user });
 }
 
