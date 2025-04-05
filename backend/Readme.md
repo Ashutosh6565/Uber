@@ -388,3 +388,158 @@ POST /captains/register
 - The `email` and `vehicle.plate` fields must be unique in the database.
 - Passwords are hashed using bcrypt before being stored in the database.
 - A JWT token is returned upon successful registration, which should be used for subsequent authenticated requests.
+
+### 2. Login Captain
+Endpoint for authenticating an existing captain.
+
+#### Endpoint
+```
+POST /captains/login
+```
+
+#### Request Body
+```json
+{
+  "email": "string",    // valid email format
+  "password": "string"  // minimum 6 characters
+}
+```
+
+#### Validation Rules
+- `email`: Required, must be a valid email format
+- `password`: Required, minimum 6 characters
+
+#### Example Request
+```json
+{
+  "email": "john.doe@example.com",
+  "password": "password123"
+}
+```
+
+#### Success Response
+**Code**: 200 OK
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "_id": "65f19d5a9f3f9c8c9a8b4567",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "status": "inactive",
+    "__v": 0
+  }
+}
+```
+
+#### Error Responses
+
+##### Invalid Email
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Invalid Email"
+}
+```
+
+##### Invalid Password
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Invalid Password"
+}
+```
+
+---
+
+### 3. Get Captain Profile
+Endpoint for retrieving the profile of the authenticated captain.
+
+#### Endpoint
+```
+GET /captains/profile
+```
+
+#### Headers
+- **Authorization**: Bearer `<JWT_TOKEN>` (required)
+
+#### Success Response
+**Code**: 200 OK
+```json
+{
+  "captain": {
+    "_id": "65f19d5a9f3f9c8c9a8b4567",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "status": "inactive",
+    "__v": 0
+  }
+}
+```
+
+#### Error Responses
+
+##### Unauthorized Access
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+### 4. Logout Captain
+Endpoint for logging out the authenticated captain.
+
+#### Endpoint
+```
+GET /captains/logout
+```
+
+#### Headers
+- **Authorization**: Bearer `<JWT_TOKEN>` (required)
+
+#### Success Response
+**Code**: 200 OK
+```json
+{
+  "message": "Logged out successfully"
+}
+```
+
+#### Error Responses
+
+##### Unauthorized Access
+**Code**: 401 UNAUTHORIZED
+```json
+{
+  "message": "Unauthorized"
+}
+```
+
+---
+
+### Notes
+- The `/captains/register` endpoint validates all fields before creating a new captain.
+- The `/captains/login` endpoint authenticates the captain and returns a JWT token.
+- The `/captains/profile` endpoint requires a valid JWT token in the `Authorization` header.
+- The `/captains/logout` endpoint invalidates the token and clears the session.
