@@ -269,3 +269,122 @@ GET /users/logout
 - The `/users/logout` endpoint clears the user's session by invalidating the token.
 
 
+
+
+
+## Captain API Documentation
+
+### 1. Register Captain
+Endpoint for registering a new captain in the system.
+
+#### Endpoint
+```
+POST /captains/register
+```
+
+#### Request Body
+```json
+{
+  "fullname": {
+    "firstname": "string", // minimum 3 characters
+    "lastname": "string"   // minimum 3 characters (optional)
+  },
+  "email": "string",      // valid email format, minimum 6 characters
+  "password": "string",   // minimum 6 characters
+  "vehicle": {
+    "color": "string",    // minimum 3 characters
+    "plate": "string",    // minimum 3 characters, must be unique
+    "capacity": "number", // minimum 1
+    "vehicleType": "string" // must be one of ['car', 'bike', 'truck']
+  }
+}
+```
+
+#### Validation Rules
+- `fullname.firstname`: Required, minimum 3 characters
+- `email`: Required, must be a valid email format, minimum 6 characters
+- `password`: Required, minimum 6 characters
+- `vehicle.color`: Required, minimum 3 characters
+- `vehicle.plate`: Required, minimum 3 characters, must be unique
+- `vehicle.capacity`: Required, must be a number, minimum 1
+- `vehicle.vehicleType`: Required, must be one of `car`, `bike`, or `truck`
+
+#### Example Request
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "john.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "Red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+#### Success Response
+**Code**: 201 CREATED
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "captain": {
+    "_id": "65f19d5a9f3f9c8c9a8b4567",
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "john.doe@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "status": "inactive",
+    "__v": 0
+  }
+}
+```
+
+#### Error Responses
+
+##### Validation Error
+**Code**: 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "First Name must be atleast 3 characters",
+      "param": "fullname.firstname",
+      "location": "body"
+    }
+  ]
+}
+```
+
+##### Captain Already Exists
+**Code**: 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "Captain already exists",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
+
+---
+
+### Notes
+- The `registerCaptain` endpoint validates all fields before creating a new captain.
+- The `email` and `vehicle.plate` fields must be unique in the database.
+- Passwords are hashed using bcrypt before being stored in the database.
+- A JWT token is returned upon successful registration, which should be used for subsequent authenticated requests.
