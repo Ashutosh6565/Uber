@@ -110,12 +110,6 @@ const Home = () => {
 
   return (
     <div className="h-screen relative overflow-hidden">
-      {/* <img
-        className="w-17 absolute left-5 top-5"
-        src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
-        alt=""
-      /> */}
-
       <img
         className="w-16 absolute left-5 top-5"
         src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
@@ -130,7 +124,7 @@ const Home = () => {
         />
       </div>
       <div className="flex flex-col justify-end h-screen absolute top-0 w-full">
-        <div className="h-[30%] p-6 bg-white relative">
+        <div className="h-[25%] p-6 bg-white relative">
           <h5
             ref={closePanelRef}
             onClick={() => setPanelOpen(false)}
@@ -139,12 +133,12 @@ const Home = () => {
             <i className="ri-arrow-down-s-line"></i>
           </h5>
           <h4 className="text-2xl font-semibold">Find a trip</h4>
-          <form
+          <form className="mt-5"
             onSubmit={(e) => {
               submitHandler(e);
             }}
           >
-            <div className="line absolute h-12 w-1 top-[39%] left-10 bg-gray-900 rounded-full"></div>
+            <div className="line absolute h-11  w-1 top-[49%] translate-y-1/2  left-10  bg-gray-900 rounded-full"></div>
             <input
               className="bg-[#eee] w-full px-12 text-base rounded-lg  mt-5"
               onClick={() => setPanelOpen(true)}
@@ -163,6 +157,8 @@ const Home = () => {
             />
           </form>
         </div>
+
+            {/* Location search panel for the uber application */}
         <div ref={panelRef} className="h-[0] bg-white ">
           <LocationSearchPanel
             setPanelOpen={setPanelOpen}
@@ -202,7 +198,10 @@ const Home = () => {
         ref={waitingForDriverRef}
         className="fixed z-10 bottom-[0]  bg-white w-full px-3 py-6 pt-12"
       >
-        <WaitingForDriver setConfirmRidePanel ={setConfirmRidePanel} waitingForDriver= {waitingForDriver}/>
+        <WaitingForDriver
+          setConfirmRidePanel={setConfirmRidePanel}
+          waitingForDriver={waitingForDriver}
+        />
       </div>
     </div>
   );

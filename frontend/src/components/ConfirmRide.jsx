@@ -6,7 +6,7 @@ const ConfirmRide = (props) => {
     <div>
       <h5
         className="p-1 text-center w-[93%] absolute top-0"
-        onClick={() => props.setVehiclePanel(false)}
+        onClick={() => props.setConfirmRidePanel(false)}
       >
         <i className=" text-xl text-grey-200 ri-arrow-down-wide-line"></i>
       </h5>

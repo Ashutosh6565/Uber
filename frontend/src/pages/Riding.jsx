@@ -1,16 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const WaitingForDriver = (props) => {
+function Riding() {
   return (
     <div>
-      <h5
-        className="p-1 text-center w-[93%] absolute top-0"
-        onClick={() => props.WaitingForDriver(false)}
-      >
-        <i className=" text-xl text-grey-200 ri-arrow-down-wide-line"></i>
-      </h5>
-      
-      
+      <div className="h-screen ">
+        <Link to='/home' className='fixed right-2 top-2 h-10 w-10 bg-white flex items-center justify-center rounded-full'><i className='text-lg font-medium ri-home-5-line'></i></Link>
+        <div className='h-1/2'>
+        <img className='h-full w-full object-cover' src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" />
+        </div>
+        <div className='h-1/2 p-6'>
+            
       <div className='flex items-center justify-between'>
           <img
             className="h-12"
@@ -37,16 +37,7 @@ const WaitingForDriver = (props) => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-5 p-4 border-b-1">
-          <i className="text-lg ri-map-pin-user-fill"></i>
-
-            <div>
-              <h3 className="text-lg font-medium">Third Wave Coffee</h3>
-              <p className="text-sm -mt-1 text-gray-600 ">
-                17th Cross Rd, PWD Quarters. 1st Sector, HSR Layout, Bengaluru Karnataka
-              </p>
-            </div>
-          </div>
+          
           <div className="flex items-center gap-5 p-4 ">
           <i className="text-lg ri-currency-line"></i>
 
@@ -62,8 +53,12 @@ const WaitingForDriver = (props) => {
         </div>
         
       </div>
+    <button className='w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-lg'>Make a Payment</button>
+
+        </div>
+      </div>
     </div>
   )
 }
 
-export default WaitingForDriver
+export default Riding
