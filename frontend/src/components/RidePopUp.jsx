@@ -1,7 +1,7 @@
 import React from "react";
 
 const RidePopUp = (props) => {
-  console.log("RidePopUp", props);
+  // console.log("RidePopUp", props);
   return (
     <div>
       <h5
@@ -54,19 +54,24 @@ const RidePopUp = (props) => {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => {
-            props.setConfirmRidePopUpPanel(true);
-          }}
-          className="w-full mt-5 bg-green-600 text-white font-semibold p-2 rounded-2xl"
-        >
-          Accept
-        </button>
-        <button 
-          onClick={() => {props.setRidePopUpPanel(false)}}
-        className="w-full mt-1 bg-gray-400 text-gray-700 font-semibold p-2 rounded-2xl">
-          Ignore
-        </button>
+        <div className="flex mt-5 w-full items-center justify-between">
+          <button
+            onClick={() => {
+              props.setConfirmRidePopUpPanel(true);
+            }}
+            className="px-8 bg-green-600 text-white font-semibold p-3 rounded-2xl"
+          >
+            Accept
+          </button>
+          <button
+            onClick={() => {
+              props.setRidePopUpPanel(false);
+            }}
+            className="px-8 mt-1 bg-gray-400 text-gray-700 font-semibold p-3 rounded-2xl"
+          >
+            Ignore
+          </button>
+        </div>
       </div>
     </div>
   );

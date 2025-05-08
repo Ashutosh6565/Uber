@@ -1,23 +1,17 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom';
 
-const ConfirmRidePopUp = (props) => {
-  const [otp, setOtp] = useState(""); 
-  const submitHander = (e) => {
-    e.preventDefault();
-  
-  };
-
+const FinishRide = (props) => {
   return (
     <div>
       <h5
         className="p-1 text-center w-[93%] absolute top-0"
-        onClick={() => props.setRidePopUpPanel(false)}
+        onClick={() => props.setFinishRide(false)}
       >
         <i className=" text-xl text-grey-200 ri-arrow-down-wide-line"></i>
       </h5>
       <h3 className="text-2xl font-semibold mb-5">
-        Confirm this ride to Start
+        Finish this ride to Start
       </h3>
       <div className=" flex items-center justify-between p-3 bg-yellow-300 rounded-lg mt-4">
         <div className="flex gap-2 items-center">
@@ -63,34 +57,23 @@ const ConfirmRidePopUp = (props) => {
           </div>
         </div>
        <div className="mt-6 w-full">
-        <form onSubmit={(e) => {
-          submitHander(e)
-        }}>
-          <input value={otp} onChange={(e) => setOtp(e.target.value)} type="text" placeholder="Enter OTP" className="bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-3"/>
+        
           <Link
-          to="/captain-riding"
+          to="/captain-home"
           onClick={() => {
             props.setRidePopUpPanel(false);
           }}
           className="w-full mt-5 bg-green-600 flex justify-center text-white font-semibold p-2 rounded-2xl"
         >
-          Confirm
+          Complete Ride
         </Link>
-        <button
-          onClick={() => {
-            props.setConfirmRidePopUpPanel(false);
-            props.setRidePopUpPanel(false);
-          }}
-          className="w-full mt-1 bg-red-700 text-white font-semibold p-2 rounded-2xl"
-        >
-          cancel
-        </button>
+        
 
-        </form>
+      
               </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ConfirmRidePopUp;
+export default FinishRide
