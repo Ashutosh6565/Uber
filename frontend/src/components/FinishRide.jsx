@@ -76,4 +76,5 @@ const FinishRide = (props) => {
   )
 }
 
-export default FinishRide
+export default FinishRide;
+

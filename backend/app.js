@@ -8,6 +8,7 @@ const connectToDb = require("./db/db");
 // const userController = require("./controllers/user.controller");
 const userRouter = require("./routes/user.routes");
 const captainRouter = require("./routes/captain.routes");
+const mapRouter = require("./routes/maps.routes");
 connectToDb();
 app.use(cors());
 app.use(express.json());
@@ -19,4 +20,5 @@ app.get("/", (req, res) => {
 });
 app.use("/users", userRouter);
 app.use("/captains", captainRouter);
+app.use("/maps", mapRouter);
 module.exports = app;
