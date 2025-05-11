@@ -9,5 +9,13 @@ const { query } = require('express-validator');
 router.get('/get-coordinates',
     query('address').notEmpty().withMessage('Address is required'),
     authMiddleware.authUser, mapController. getCoordinates);
-
+router.get("/get-distance-time",
+    query('origin').notEmpty().withMessage('Origin is required'),
+    query('destination').notEmpty().withMessage('Destination is required'),
+    authMiddleware.authUser, mapController.getDistanceTime
+);
+router.get('/get-suggestions',
+    query('input').notEmpty().withMessage('Input is required'),
+    authMiddleware.authUser, mapController.getAutoSuggestions
+);
 module.exports = router;
