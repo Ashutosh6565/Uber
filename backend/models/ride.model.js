@@ -20,7 +20,7 @@ const rideSchema = new mongoose.Schema({
     },
     fare: {
         type: Number,
-        required: true,
+        // required: true,
     },
    
     status: {
@@ -30,22 +30,26 @@ const rideSchema = new mongoose.Schema({
     },
     duration :{
         type: Number,
-        required: true,
+        // required: true,
     },
     distance :{
         type: Number,
-        required: true,
+        // required: true,
     },
     paymentID: {
-        type: string,
+        type: String,
     },
     orderID: {
-        type: string,
+        type: String,
     },
     signature: {
-        type: string,
+        type: String,
     },
-
+    otp: {
+        type: String,
+        select: false,
+        required: true,
+    },
 })
 
 
