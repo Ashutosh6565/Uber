@@ -8,7 +8,7 @@ const LocationSearchPanel = ({ suggestions, setVehiclePanel, setPanelOpen, setPi
         } else if (activeField === 'destination') {
             setDestination(suggestion.description)
         }
-        // Optionally close panel or update UI:
+        // Optionally close panel or update UI:   @#Z!A 
         // setVehiclePanel(true)
         // setPanelOpen(false)
     }

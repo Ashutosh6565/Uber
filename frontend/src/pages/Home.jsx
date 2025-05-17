@@ -31,7 +31,7 @@ const Home = () => {
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
-
+  const [fare, setFare] = useState({});
     const handlePickupChange = async (e) => {
         setPickup(e.target.value)
         try {
@@ -145,6 +145,33 @@ const Home = () => {
     },
     [waitingForDriver]
   );
+ async  function findTrip(){
+    setVehiclePanel(true)
+    setPanelOpen(false)
+    const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/get-fare`, {
+      params: {
+        pickup,
+        destination
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+     setFare(response.data.fare);
+  console.log(response.data);
+  }
+ async function createRide(vehicleType){
+  axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+    // userId: localStorage.getItem('userId'),
+    pickup,
+    destination,
+    vehicleType
+  }, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  })
+  }
 
   return (
     <div className="h-screen relative overflow-hidden">
@@ -192,16 +219,17 @@ const Home = () => {
                             onClick={() => {
                                 setPanelOpen(true)
                                 setActiveField('destination')
-                            }}
-                            value={destination}
-                            onChange={handleDestinationChange}
-                            className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full  mt-3'
-                            type="text"
-                            placeholder='Enter your destination' />
-          </form>
-        </div>
+                              }}
+                              value={destination}
+                              onChange={handleDestinationChange}
+                              className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full  mt-3'
+                              type="text"
+                              placeholder='Enter your destination' />
+                      </form>
+                      <button onClick={findTrip} className="bg-black text-white px-6 py-3 rounded-lg mt-4 w-full">Find Trip</button>
+                    </div>
 
-            {/* Location search panel for the uber application */}
+                      {/* Location search panel for the uber application */}
         <div ref={panelRef} className="h-[0] bg-white ">
           <LocationSearchPanel
             suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
@@ -219,6 +247,7 @@ const Home = () => {
         className="fixed z-10 bottom-0 translate-y-full bg-white w-full px-3 py-10 pt-12"
       >
         <VehiclePanel
+          fare={fare}
           setVehiclePanel={setVehiclePanel}
           setConfirmRidePanel={setConfirmRidePanel}
         />

@@ -543,3 +543,68 @@ GET /captains/logout
 - The `/captains/login` endpoint authenticates the captain and returns a JWT token.
 - The `/captains/profile` endpoint requires a valid JWT token in the `Authorization` header.
 - The `/captains/logout` endpoint invalidates the token and clears the session.
+
+## Ride API Documentation
+
+### 1. Get Fare
+
+Endpoint for calculating the fare for a ride based on the pickup and destination locations.
+
+#### Endpoint
+```
+GET /rides/fare
+```
+
+#### Request Parameters
+- `pickup`: Required, string, the pickup location
+- `destination`: Required, string, the destination location
+
+#### Example Request
+```
+GET /rides/fare?pickup=LocationA&destination=LocationB
+```
+
+#### Success Response
+**Code**: 200 OK
+```json
+{
+  "fare": 25.50
+}
+```
+
+#### Error Responses
+
+##### Validation Error
+**Code**: 400 BAD REQUEST
+```json
+{
+  "errors": [
+    {
+      "msg": "Pickup location is required",
+      "param": "pickup",
+      "location": "query"
+    },
+    {
+      "msg": "Destination location is required",
+      "param": "destination",
+      "location": "query"
+    }
+  ]
+}
+```
+
+##### Internal Server Error
+**Code**: 500 INTERNAL SERVER ERROR
+```json
+{
+  "message": "An error occurred while calculating the fare"
+}
+```
+
+---
+
+### Notes
+- The `/rides/fare` endpoint calculates the fare based on the provided pickup and destination locations.
+- The fare calculation logic is based on predefined rates and distance between the locations.
+
+

@@ -59,6 +59,8 @@ async function getFare(pickup, destination) {
   return fare;
 }
 
+module.exports.getFare = getFare;
+
 function getOtp(num){
 function generateOtp(num) {
     if (!num || num <= 0) {

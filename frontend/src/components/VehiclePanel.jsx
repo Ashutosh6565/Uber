@@ -21,7 +21,7 @@ const VehiclePanel = (props) => {
             <h5 className="font-medium text-sm">2 min away</h5>
             <p className="font-medium text-xs">Affordable, compact rides</p>
           </div>
-          <h2 className="text-xl font-semibold">$193.20</h2>
+          <h2 className="text-xl font-semibold">{props.fare.car}</h2>
         </div>
 
         <div onClick={() => props.setConfirmRidePanel(true)} className="flex w-full border-2 mb-2 rounded-2xl active:border-black p-3 items-center justify-between">
@@ -40,7 +40,7 @@ const VehiclePanel = (props) => {
             <h5 className="font-medium text-sm">2 min away</h5>
             <p className="font-medium text-xs">Affordable, motorcycle rides</p>
           </div>
-          <h2 className="text-xl font-semibold">$193.20</h2>
+          <h2 className="text-xl font-semibold">{props.fare.motorcycle}</h2>
         </div>
         <div onClick={() => props.setConfirmRidePanel(true)} className="flex w-full border-2 mb-2 rounded-2xl active:border-black p-3 items-center justify-between">
           <img
@@ -60,7 +60,7 @@ const VehiclePanel = (props) => {
               Comfortable sedans, top-quality drivers
             </p>
           </div>
-          <h2 className="text-xl font-semibold">$293.20</h2>
+          <h2 className="text-xl font-semibold">{props.fare.car}</h2>
         </div>
         <div onClick={() => props.setConfirmRidePanel(true)} className="flex w-full border-2 mb-2 rounded-2xl active:border-black p-3 items-center justify-between">
           <img
@@ -80,7 +80,7 @@ const VehiclePanel = (props) => {
               Comfortable sedans, top-quality drivers
             </p>
           </div>
-          <h2 className="text-xl font-semibold">$129.20</h2>
+          <h2 className="text-xl font-semibold">{props.fare.auto}</h2>
         </div>
 
     </div>
