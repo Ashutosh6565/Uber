@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from 'react-router-dom';
-import { CapatainDataContext } from "../context/CapatainContext.jsx";
+// import { captain } from "../context/captainContext.jsx";
+//captainDataContext
+import { CaptainDataContext } from "../context/CaptainContext.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 const Captainlogin = () => {
@@ -8,7 +10,7 @@ const Captainlogin = () => {
     const [password, setPassword] = useState("");
     // const [userdata, setData] = useState([]);
     // const [captainData, setData] = useState([]);
-  const {captain, setCaptain} = React.useContext(CapatainDataContext);
+  const {captain, setCaptain} = React.useContext(CaptainDataContext);
   const navigate = useNavigate();
   
     const SybmitHandler = async (e) => {
@@ -22,6 +24,7 @@ const Captainlogin = () => {
           const data = response.data;
           setCaptain(data.captain);
           localStorage.setItem('token', data.token);
+         
           navigate('/captain-home');
         }
       } catch (error) {
@@ -29,7 +32,7 @@ const Captainlogin = () => {
         alert("Login failed. Please check your credentials and try again.");
       }
 
-      console.log(captain);
+      // console.log(captain);
       setEmail("");
       setPassword("");
   

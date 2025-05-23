@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { CapatainDataContext } from "../context/CapatainContext.jsx";
+// import { CaptainDataContext } from "../context/CaptainContext.jsx";
+import { CaptainDataContext } from "../context/CaptainContext.jsx"; //captainDataContext
+
+//captainDataContext
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const CaptainSignup = () => {
@@ -17,8 +20,8 @@ const CaptainSignup = () => {
   const [vehicleCapacity, setVehicleCapacity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
 
-  const { captain, setCaptain } = React.useContext(CapatainDataContext);
-
+  const { captain, setCaptain } = React.useContext(CaptainDataContext);
+  
   const SybmitHandler = async (e) => {
     e.preventDefault();
 
@@ -37,12 +40,15 @@ const CaptainSignup = () => {
       },
     };
     // console.log(import.meta.env.VITE_BACKEND_URL);
+    console.log("Sending this captain data:", captainData);
+    
     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData);
 
 
     if(response.status === 201) {
       const data = response.data;
       console.log(data);
+      console.log("captain data", data.captain);
       setCaptain(data.captain);
       localStorage.setItem('token', data.token);
       navigate('/captain-home');
