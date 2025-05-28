@@ -65,6 +65,8 @@ const CaptainHome = () => {
       <div className="h-2/5 p-6">
         <CaptainDetails />
       </div>
+
+      
       <div
         ref={ridePopUpPanelRef}
         className="fixed w-full translate-y-full z-10 bottom-0  bg-white px-3 py-10 pt-12"

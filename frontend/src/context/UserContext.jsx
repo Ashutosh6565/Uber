@@ -7,7 +7,7 @@ const UserContext = ({children}) => {
             fullName: {
                 firstName: '',
                 lastName: ''
-            }
+             }
         })
   return (
     <div>

@@ -21,7 +21,7 @@ const CaptainSignup = () => {
   const [vehicleType, setVehicleType] = useState("");
 
   const { captain, setCaptain } = React.useContext(CaptainDataContext);
-  
+  console.log("captainsignup", captain);
   const SybmitHandler = async (e) => {
     e.preventDefault();
 
@@ -47,7 +47,7 @@ const CaptainSignup = () => {
 
     if(response.status === 201) {
       const data = response.data;
-      console.log(data);
+     
       console.log("captain data", data.captain);
       setCaptain(data.captain);
       localStorage.setItem('token', data.token);

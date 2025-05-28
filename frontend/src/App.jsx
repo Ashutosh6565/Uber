@@ -14,7 +14,7 @@ import CaptainLogout from "./pages/CaptainLogout";
 import Riding from "./pages/Riding";
 import CaptainRiding from "./pages/CaptainRiding";
 // import CapatainContext, { CapatainDataContext } from "./context/CapatainContext";
-import CaptainContext,{CaptainDataContext} from "./context/CaptainContext";
+import CaptainContext, { CaptainDataContext } from "./context/CaptainContext";
 const App = () => {
   return (
     <div>
@@ -45,19 +45,24 @@ const App = () => {
         />
         {/* <Route path = '/captain-home' element = {<CapatainHome />} />
          */}
+
         <Route
-  path="/captain-home"
-  element={
-    <CaptainProtectWrapper>
-      <CaptainContext>
-        <CaptainHome />
-      </CaptainContext>
-    </CaptainProtectWrapper>
-  }
-/>
-        <Route path="/captain/logout" element={  <CaptainProtectWrapper>
+          path="/captain-home"
+          element={
+            <CaptainProtectWrapper>
+              <CaptainHome />
+            </CaptainProtectWrapper>
+          }
+        />
+
+        <Route
+          path="/captain/logout"
+          element={
+            <CaptainProtectWrapper>
               <CaptainLogout />
-            </CaptainProtectWrapper>} />
+            </CaptainProtectWrapper>
+          }
+        />
       </Routes>
     </div>
   );
