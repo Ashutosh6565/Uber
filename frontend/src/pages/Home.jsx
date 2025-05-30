@@ -41,6 +41,7 @@ const Home = () => {
 const {socket} = React.useContext(SocketContext);
 const {user} = useContext(UserDataContext);
 
+  console.log("User:", user);
 
  
     useEffect(() => {
