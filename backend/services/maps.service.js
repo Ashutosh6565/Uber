@@ -65,3 +65,18 @@ module.exports.getAutoSuggestions = async (input) => {
         throw new Error('Error fetching suggestions: ' + error.message);
     }
 }
+module.exports.getCaptainsInTheRadius = async (lat, lng, radius) => {
+    if (!lat || !lng || !radius) {
+        throw new Error('Latitude, longitude, and radius are required');
+    }
+
+    const captains = await Captain.find({
+        location: {
+            $geoWithin: {
+                $centerSphere: [[lng, lat], radius / 6378.1]
+            }
+        }
+    });
+
+    return captains;
+}
