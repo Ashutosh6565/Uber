@@ -16,5 +16,11 @@ router.get('/get-fare',
    query('destination').isString().isLength({min:3}).withMessage('Destination location is required'),
    rideController.getFare
 )
+router.post('/confirm',
+   authMiddleware.authCaptain,
+   body('rideId').isMongoId().withMessage('Ride ID is required'),
+   
+   rideController.confirmRide
+)
 
 module.exports = router;

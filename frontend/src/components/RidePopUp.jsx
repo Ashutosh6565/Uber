@@ -18,7 +18,7 @@ const RidePopUp = (props) => {
             src="https://miro.medium.com/v2/resize:fit:1400/1*y_uyQN1xEjppGVWJJkibMQ.jpeg"
             alt=""
           />
-          <h2 className="text-lg font-medium">Alaka devi</h2>
+          <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname}</h2>
         </div>
         <h3>4 km</h3>
       </div>
@@ -30,7 +30,7 @@ const RidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600 ">
-                kankariya Tablab, Bhopal
+                {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -40,8 +40,7 @@ const RidePopUp = (props) => {
             <div>
               <h3 className="text-lg font-medium">Third Wave Coffee</h3>
               <p className="text-sm -mt-1 text-gray-600 ">
-                17th Cross Rd, PWD Quarters. 1st Sector, HSR Layout, Bengaluru
-                Karnataka
+                {props.ride?.destination}
               </p>
             </div>
           </div>
@@ -49,7 +48,7 @@ const RidePopUp = (props) => {
             <i className="text-lg ri-currency-line"></i>
 
             <div>
-              <h3 className="text-lg font-medium">₹271</h3>
+              <h3 className="text-lg font-medium">{props.ride?.fare}</h3>
               <p className="text-sm -mt-1 text-gray-600 ">Cash Cash</p>
             </div>
           </div>
@@ -58,6 +57,7 @@ const RidePopUp = (props) => {
           <button
             onClick={() => {
               props.setConfirmRidePopUpPanel(true);
+              props.confirmRide();
             }}
             className="px-8 bg-green-600 text-white font-semibold p-3 rounded-2xl"
           >

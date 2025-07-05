@@ -15,6 +15,7 @@ import { UserDataContext } from "../context/UserContext";
 import { Socket } from "socket.io-client";
 import {useEffect} from "react";
 
+
 const Home = () => {
   const [pickup, setPickup] = useState("");
   const [destination, setDestination] = useState("");
@@ -38,8 +39,9 @@ const Home = () => {
   const [waitingForDriver, setWaitingForDriver] = useState(false);
   const [fare, setFare] = useState({});
   const [vehicleType, setVehicleType] = useState(null);
-const {socket} = React.useContext(SocketContext);
+// const {socket} = React.useContext(SocketContext);
 const {user} = useContext(UserDataContext);
+const {socket} = React.useContext(SocketContext);
 
   console.log("User:", user);
 
@@ -48,8 +50,13 @@ const {user} = useContext(UserDataContext);
       console.log("User data:", user);
         socket.emit("join", { userType: "user", userId: user._id })
     }, [ user ])
-
-
+  // useEffect(() => {
+  //   console.log(user)
+  //   sendMessage("join", { userType: "user", userId: user._id });
+  // }, [user, sendMessage]);
+socket.on('ride-confirmed', ride => {
+  setWaitingForDriver(true);
+})
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -187,22 +194,28 @@ const {user} = useContext(UserDataContext);
     setFare(response.data.fare);
     console.log(response.data);
   }
+
+  
   async function createRide() {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/rides/create`,
-      {
-        // userId: localStorage.getItem('userId'),
-        pickup,
-        destination,
-        vehicleType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/rides/create`,
+        {
+          pickup,
+          destination,
+          vehicleType,
         },
-      }
-    );
-    console.log(response.data);
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Create ride error:", error.response?.data || error.message);
+      alert(JSON.stringify(error.response?.data));
+    }
   }
 
   return (

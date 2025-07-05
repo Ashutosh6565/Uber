@@ -55,13 +55,13 @@ const capitainSchema = new mongoose.Schema({
                 required: true,
             },
         },
-        location:{
-            ltd : {
-                type: Number
-            },
-            lng : {
-                type:Number
-            }
+        location: {
+           ltd : {
+            type: Number,
+           },
+           lng : {
+            type : Number,
+           }
         }
     })
 
@@ -77,6 +77,8 @@ capitainSchema.methods.comparePassword = async function(Password) {
 capitainSchema.statics.hashPassword = async function(Password) {
     return await bcrypt.hash(Password, 10);
 }
+
+capitainSchema.index({ location: "2dsphere" });
 
 const capitainModel = mongoose.model('Capitain', capitainSchema);
 

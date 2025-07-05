@@ -5,49 +5,64 @@ import RidePopUp from "../components/RidePopUp";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ConfirmRidePopUp from "../components/ConfirmRidePopUp";
-import { useEffect,useContext } from "react";
-import {SocketContext} from "../context/SocketContext";
+import { useEffect, useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
 import { CaptainDataContext } from "../context/CaptainContext";
 
-
 const CaptainHome = () => {
-  const [ridePopUpPanel, setRidePopUpPanel] = useState(true);
+  const [ridePopUpPanel, setRidePopUpPanel] = useState(false);
   const [confirmRidePopUpPanel, setConfirmRidePopUpPanel] = useState(false);
   const ridePopUpPanelRef = useRef(null);
   const confirmRidePopUpPanelRef = useRef(null);
   const { socket } = useContext(SocketContext);
   const { captain } = useContext(CaptainDataContext);
-
-useEffect(() => {
- 
-    socket.emit('join', {
+  const [ride, setRide] = useState(null);
+  useEffect(() => {
+    socket.emit("join", {
       userId: captain._id,
-      userType: 'captain'
+      userType: "captain",
     });
-  
+
     const updateLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        console.log("Current location:", { latitude, longitude });
-        socket.emit('update-location-captain', {
-          userId: captain._id,
-          userType: 'captain',
-          location: { ltd: latitude, lng: longitude }
-        });
-      },
-      (error) => {
-        console.error("Error getting location:", error);
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            // const { latitude, longitude } = position.coords;
+            // console.log("Current location:", { latitude, longitude });
+              // console.log("Current location:", {
+              //   ltd: position.coords.latitude,
+              //   lng: position.coords.longitude,
+              // });
+
+            socket.emit("update-location-captain", {
+              userId: captain._id,
+              location: {
+                ltd: position.coords.latitude,
+                lng: position.coords.longitude,
+              },
+            });
+          },
+          
+        );
       }
-    );
-  }
-}
-const locationInterval = setInterval(updateLocation, 5000); // Update location every 5 seconds
+    };
+    const locationInterval = setInterval(updateLocation, 5000); // Update location every 5 seconds
     updateLocation();
-}, [captain, socket]);
+    // return () => clearInterval(locationInterval);
+  }, [captain, socket]);
+  // }, [captain, socket]);
 
+  socket.on("new-ride", (data) => {
+    console.log("New ride request received:", data);
+    setRide(data);
+    setRidePopUpPanel(true);
+  });
 
+async function confirmRide() {
+  const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/rides/confirm`, {})
+  setConfirmRidePopUpPanel(true);
+  setRidePopUpPanel(false);
+}
 
   useGSAP(
     function () {
@@ -110,8 +125,10 @@ const locationInterval = setInterval(updateLocation, 5000); // Update location e
         className="fixed w-full translate-y-full z-10 bottom-0  bg-white px-3 py-10 pt-12"
       >
         <RidePopUp
+          ride={ride}
           setRidePopUpPanel={setRidePopUpPanel}
           setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}
+          confirmRide={confirmRide}
         />
       </div>
       <div

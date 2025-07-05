@@ -61,15 +61,12 @@ async function getFare(pickup, destination) {
 
 module.exports.getFare = getFare;
 
-function getOtp(num){
-function generateOtp(num) {
-    if (!num || num <= 0) {
-        throw new Error("Number of digits must be greater than 0");
+function getOtp(num) {
+    function generateOtp(num) {
+        const otp = crypto.randomInt(Math.pow(10, num - 1), Math.pow(10, num)).toString();
+        return otp;
     }
-    const otp = crypto.randomInt(0, Math.pow(10, num)).toString().padStart(num, "0");
-    return otp;
-}
-return generateOtp(num);
+    return generateOtp(num);
 }
 
 
@@ -92,3 +89,45 @@ module.exports.createRide = async ({
   });
   return ride;
 };
+// module.exports.confirmRide = async ({ rideId, captain }) => {
+//     if (!rideId) {
+//         throw new Error('Ride ID is required');
+//     }
+//     if (!captain || !captain._id) {
+//         throw new Error('Captain is required');
+//     }
+
+//     await rideModel.findOneAndUpdate({ _id: rideId }, { status: 'accepted', captain: captain._id });
+
+//     const ride = await rideModel.findOne({ _id: rideId }).populate('user');
+//     if (!ride) {
+//         throw new Error('Ride not found');
+//     }
+//     return ride;
+// }
+
+module.exports.confirmRide = async ({
+    rideId, captain
+}) => {
+    if (!rideId) {
+        throw new Error('Ride id is required');
+    }
+
+    await rideModel.findOneAndUpdate({
+        _id: rideId
+    }, {
+        status: 'accepted',
+        captain: captain._id
+    })
+
+    const ride = await rideModel.findOne({
+        _id: rideId
+    }).populate('user').populate('captain').select('+otp');
+
+    if (!ride) {
+        throw new Error('Ride not found');
+    }
+
+    return ride;
+
+}
